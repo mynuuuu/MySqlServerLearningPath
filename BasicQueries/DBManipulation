@@ -1,0 +1,17 @@
+In SSMS, you can manipulate a DB using the following queries.
+Creating a DB -- CREATE DATABASE <database name>
+Altering a DB using ALTER query -- ALTER DATABASE <database name> MODIFY NAME = <new database name>
+Altering a DB using SP -- EXECUTE sp_renameDB 'old database name', 'new database name'
+Dropping a DB -- DROP DATABASE <database name>
+
+Key points:
+* Creating, altering and dropping -> all these can be done graphically in SSMS instead of queries.
+* Whether you create a DB graphically or through query, the following two files will be generated.
+  -- .MDF file -> Data file (Contains actual data)
+  -- .LDF file -> Transaction Log File (Used to recover the database)
+* Dropping a DB deletes its respective MDF and LDF file
+* You cannot drop a DB, if its currently in use. We get an error stating 'Cannot drop <database name> because it is currently in use'
+* So if other user uses the DB you want to delete, you need to put the DB in single user mode and then drop the database.
+  -- ALTER DATABASE <database name> SET SINGLE_USER WITH ROLLBACK IMMEDIATE
+* 'WITH ROLLBACK IMMEDIATE' option, it will rollback all incomplete transactions and closes the connection to the database.
+* System databases cannot be dropped.
